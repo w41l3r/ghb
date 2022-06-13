@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# ghbot.sh - Google hacking automation bot
+# ghb.sh - Google Hacking Bot
 #
 
 SUBSFILE=$1
