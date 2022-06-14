@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# ghb.sh - Google Hacking Bot
+# ghbot.sh - Google hacking automation bot
 #
 
 SUBSFILE=$1
@@ -82,6 +82,11 @@ function dork_it() {
 	echo
 	echo "[*] Searching sites with Directory Listing..."
 	MYDORK="https://www.google.com/search?q=site%3A${TARGET}%20%22index%20of%22"
+	curl -H 'User-Agent: Googlebot' -s "$MYDORK" -o /tmp/fooo
+        check_search_results "$MYDORK"
+	echo
+	echo "[*] Searching wordpress sites..."
+	MYDORK="https://www.google.com/search?q=site%3A${TARGET}%20wp-content"
 	curl -H 'User-Agent: Googlebot' -s "$MYDORK" -o /tmp/fooo
         check_search_results "$MYDORK"
 
