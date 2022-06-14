@@ -85,8 +85,28 @@ function dork_it() {
 	curl -H 'User-Agent: Googlebot' -s "$MYDORK" -o /tmp/fooo
         check_search_results "$MYDORK"
 	echo
-	echo "[*] Searching wordpress sites..."
+	echo "[*] Searching WordPress sites..."
 	MYDORK="https://www.google.com/search?q=site%3A${TARGET}%20wp-content"
+	curl -H 'User-Agent: Googlebot' -s "$MYDORK" -o /tmp/fooo
+        check_search_results "$MYDORK"
+	echo
+	echo "[*] Searching Weblogic sites..."
+	MYDORK="https://www.google.com/search?q=site%3A${TARGET}%20intitle%3A%22weblogic%22%20login%20intext%3A%22footer%20powered%20by%22"
+	curl -H 'User-Agent: Googlebot' -s "$MYDORK" -o /tmp/fooo
+        check_search_results "$MYDORK"
+	echo
+	echo "[*] Searching Drupal sites..."
+	MYDORK="https://www.google.com/search?q=site%3A${TARGET}%20inurl%3A%22sites/all/modules/ckeditor%22%20-drupalcode.org"
+	curl -H 'User-Agent: Googlebot' -s "$MYDORK" -o /tmp/fooo
+        check_search_results "$MYDORK"
+	echo
+	echo "[*] Searching Joomla sites..."
+	MYDORK="https://www.google.com/search?q=site%3A${TARGET}%20intitle%3A%22Index%20of%20/%22%20%22joomla/database%22"
+	curl -H 'User-Agent: Googlebot' -s "$MYDORK" -o /tmp/fooo
+        check_search_results "$MYDORK"
+	echo
+	echo "[*] Searching GLPI sites..."
+	MYDORK="https://www.google.com/search?q=site%3A${TARGET}%20intitle%3A%22GLPI%20-%20Authentication%22"
 	curl -H 'User-Agent: Googlebot' -s "$MYDORK" -o /tmp/fooo
         check_search_results "$MYDORK"
 
