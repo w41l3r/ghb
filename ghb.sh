@@ -15,7 +15,7 @@ function check_search_results() {
        		 echo " [!] nothing found."
 		 return 1
     	else
-       		 echo " [+] Found Something! "
+       		 echo " [+] FOUND SOMETHING! "
         	 echo $SEARCH >> /tmp/resultz.txt
 		 return 0
 	fi
@@ -93,7 +93,9 @@ function dork_it() {
 	echo
 	echo "Finished dorking!"
 	echo
+	echo "==================================="
 	echo "Final Results (indexed subdomains):"
+	echo "==================================="
 	cat /tmp/resultz.txt
 	echo
 	echo "Have a nice day :D"
