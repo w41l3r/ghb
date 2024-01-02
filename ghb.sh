@@ -5,7 +5,7 @@
 
 #URLBASE="https://www.google.com/"
 # or uncomment this if using Fireprox (fireprox-produced url after executing fire.py --command create --url https://www.google.com/ ... )
-URLBASE="https://5kmki2wrw7.execute-api.us-east-2.amazonaws.com/fireprox/"
+URLBASE="https://xyzxyzxyz.execute-api.us-east-2.amazonaws.com/fireprox/"
 
 SUBSFILE=$1
 rm -f /tmp/fooo /tmp/resultz.txt /tmp/subsz
