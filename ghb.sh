@@ -3,6 +3,10 @@
 # ghb.sh - Google Hacking Bot
 #
 
+#URLBASE="https://www.google.com/"
+# or uncomment this if using Fireprox (fireprox-produced url after executing fire.py --command create --url https://www.google.com/ ... )
+URLBASE="https://5kmki2wrw7.execute-api.us-east-2.amazonaws.com/fireprox/"
+
 SUBSFILE=$1
 rm -f /tmp/fooo /tmp/resultz.txt /tmp/subsz
 
@@ -10,7 +14,8 @@ function check_search_results() {
 
 	SEARCH=$1
 	if grep -i -e "Certifique-se de que todas as palavras estejam escritas corretamente" \
-            -e "Make sure that all words are spelled correctly" /tmp/fooo >/dev/null
+            -e "Make sure that all words are spelled correctly"\
+	    -e "did not match any documents" /tmp/fooo >/dev/null
     	then
        		 echo " [!] nothing found."
 		 return 1
@@ -36,85 +41,87 @@ function dork_it() {
 	echo "========================" | tee -a /tmp/resultz.txt
 	echo
 	echo "[*] Searching trello..."
-	MYDORK="https://www.google.com/search?q=site%3Atrello.com%20AND%20intext:${TARGET}"
+	MYDORK="${URLBASE}search?q=site%3Atrello.com%20AND%20intext:${TARGET}"
 	curl -H 'User-Agent: Googlebot' -s $MYDORK -o /tmp/fooo
 	check_search_results "$MYDORK"
 	echo
 	echo "[*] Searching pastebin..."
-	MYDORK="https://www.google.com/search?q=site%3Apastebin.com%20AND%20intext:${TARGET}"
+	MYDORK="${URLBASE}search?q=site%3Apastebin.com%20AND%20intext:${TARGET}"
 	curl -H 'User-Agent: Googlebot' -s "$MYDORK" -o /tmp/fooo
         check_search_results "$MYDORK"
 	echo
 	echo "[*] Searching txt files..."
-	MYDORK="https://www.google.com/search?q=inurl%3A${TARGET}%20AND%20filetype:txt"
+	MYDORK="${URLBASE}search?q=inurl%3A${TARGET}%20AND%20filetype:txt"
 	curl -H 'User-Agent: Googlebot' -s "$MYDORK" -o /tmp/fooo
         check_search_results "$MYDORK"
 	echo
 	echo "[*] Searching log files..."
-	MYDORK="https://www.google.com/search?q=inurl%3A${TARGET}%20AND%20filetype:log"
+	MYDORK="${URLBASE}search?q=inurl%3A${TARGET}%20AND%20filetype:log"
 	curl -H 'User-Agent: Googlebot' -s "$MYDORK" -o /tmp/fooo
         check_search_results "$MYDORK"
 	echo
 	echo "[*] Searching bkp files..."
-	MYDORK="https://www.google.com/search?q=inurl%3A${TARGET}%20AND%20filetype:bkp"
+	MYDORK="${URLBASE}search?q=inurl%3A${TARGET}%20AND%20filetype:bkp"
 	curl -H 'User-Agent: Googlebot' -s "$MYDORK" -o /tmp/fooo
         check_search_results "$MYDORK"
 	echo
 	echo "[*] Searching sql files..."
-	MYDORK="https://www.google.com/search?q=inurl%3A${TARGET}%20AND%20filetype:sql"
+	MYDORK="${URLBASE}search?q=inurl%3A${TARGET}%20AND%20filetype:sql"
 	curl -H 'User-Agent: Googlebot' -s "$MYDORK" -o /tmp/fooo
         check_search_results "$MYDORK"
 	echo
 	echo "[*] Searching web files..."
-	MYDORK="https://www.google.com/search?q=inurl%3A${TARGET}%20filetype:asp%20%7C%20filetype:aspx%20%7C%20filetype:php%20%7C%20filetype:jsp%20%7C%20filetype:ashx"
+	MYDORK="${URLBASE}search?q=inurl%3A${TARGET}%20filetype:asp%20%7C%20filetype:aspx%20%7C%20filetype:php%20%7C%20filetype:jsp%20%7C%20filetype:ashx"
 	curl -H 'User-Agent: Googlebot' -s "$MYDORK" -o /tmp/fooo
         check_search_results "$MYDORK"
 	echo
 	echo "[*] Searching admin sites..."
-	MYDORK="https://www.google.com/search?q=intitle%3Aadmin%20AND%20${TARGET}"
+	MYDORK="${URLBASE}search?q=intitle%3Aadmin%20AND%20${TARGET}"
 	curl -H 'User-Agent: Googlebot' -s "$MYDORK" -o /tmp/fooo
         check_search_results "$MYDORK"
 	echo
 	echo "[*] Searching office files..."
-	MYDORK="https://www.google.com/search?q=site%3A${TARGET}%20ext%3Axls%20%7C%20ext%3Adoc%20%7C%20ext%3Axlsx%20%7C%20ext%3Adocx%20%7C%20ext%3Aodt%20%7C%20ext%3Artf%20%7C%20ext%3Asxw%20%7C%20ext%3Apsw%20%7C%20ext%3Appt%20%7C%20ext%3Apptx%20%7C%20ext%3Apps%20%7C%20ext%3Acsv%20"
+	MYDORK="${URLBASE}search?q=site%3A${TARGET}%20ext%3Axls%20%7C%20ext%3Adoc%20%7C%20ext%3Axlsx%20%7C%20ext%3Adocx%20%7C%20ext%3Aodt%20%7C%20ext%3Artf%20%7C%20ext%3Asxw%20%7C%20ext%3Apsw%20%7C%20ext%3Appt%20%7C%20ext%3Apptx%20%7C%20ext%3Apps%20%7C%20ext%3Acsv%20"
 	curl -H 'User-Agent: Googlebot' -s "$MYDORK" -o /tmp/fooo
         check_search_results "$MYDORK"
 	echo
 	echo "[*] Searching sites with Directory Listing..."
-	MYDORK="https://www.google.com/search?q=site%3A${TARGET}%20%22index%20of%22"
+	MYDORK="${URLBASE}search?q=site%3A${TARGET}%20%22index%20of%22"
 	curl -H 'User-Agent: Googlebot' -s "$MYDORK" -o /tmp/fooo
         check_search_results "$MYDORK"
 	echo
 	echo "[*] Searching WordPress sites..."
-	MYDORK="https://www.google.com/search?q=site%3A${TARGET}%20wp-content"
+	MYDORK="${URLBASE}search?q=site%3A${TARGET}%20wp-content"
 	curl -H 'User-Agent: Googlebot' -s "$MYDORK" -o /tmp/fooo
         check_search_results "$MYDORK"
 	echo
 	echo "[*] Searching Weblogic sites..."
-	MYDORK="https://www.google.com/search?q=site%3A${TARGET}%20intitle%3A%22weblogic%22%20login%20intext%3A%22footer%20powered%20by%22"
+	MYDORK="${URLBASE}search?q=site%3A${TARGET}%20intitle%3A%22weblogic%22%20login%20intext%3A%22footer%20powered%20by%22"
 	curl -H 'User-Agent: Googlebot' -s "$MYDORK" -o /tmp/fooo
         check_search_results "$MYDORK"
 	echo
 	echo "[*] Searching Drupal sites..."
-	MYDORK="https://www.google.com/search?q=site%3A${TARGET}%20inurl%3A%22sites/all/modules/ckeditor%22%20-drupalcode.org"
+	MYDORK="${URLBASE}search?q=site%3A${TARGET}%20inurl%3A%22sites/all/modules/ckeditor%22%20-drupalcode.org"
 	curl -H 'User-Agent: Googlebot' -s "$MYDORK" -o /tmp/fooo
         check_search_results "$MYDORK"
 	echo
 	echo "[*] Searching Joomla sites..."
-	MYDORK="https://www.google.com/search?q=site%3A${TARGET}%20intitle%3A%22Index%20of%20/%22%20%22joomla/database%22"
+	MYDORK="${URLBASE}search?q=site%3A${TARGET}%20intitle%3A%22Index%20of%20/%22%20%22joomla/database%22"
 	curl -H 'User-Agent: Googlebot' -s "$MYDORK" -o /tmp/fooo
         check_search_results "$MYDORK"
 	echo
 	echo "[*] Searching GLPI sites..."
-	MYDORK="https://www.google.com/search?q=site%3A${TARGET}%20intitle%3A%22GLPI%20-%20Authentication%22"
+	MYDORK="${URLBASE}search?q=site%3A${TARGET}%20intitle%3A%22GLPI%20-%20Authentication%22"
 	curl -H 'User-Agent: Googlebot' -s "$MYDORK" -o /tmp/fooo
         check_search_results "$MYDORK"
+	echo
 	echo "[*] Searching BIG-IP(F5) sites..."
-	MYDORK="https://www.google.com/search?q=site%3A${TARGET}%20intitle%3A%22BIG-IP%22%20inurl%3A%22tmui%22"
+	MYDORK="${URLBASE}search?q=site%3A${TARGET}%20intitle%3A%22BIG-IP%22%20inurl%3A%22tmui%22"
 	curl -H 'User-Agent: Googlebot' -s "$MYDORK" -o /tmp/fooo
         check_search_results "$MYDORK"
+	echo
 	echo "[*] Searching BIG-IP(F5) - DORK2 - sites..."
-	MYDORK="https://www.google.com/search?q=site%3A${TARGET}%20inurl%3A%22tmui%2Flogin.jsp%22"
+	MYDORK="${URLBASE}search?q=site%3A${TARGET}%20inurl%3A%22tmui%2Flogin.jsp%22"
 	curl -H 'User-Agent: Googlebot' -s "$MYDORK" -o /tmp/fooo
         check_search_results "$MYDORK"
 
@@ -157,7 +164,7 @@ do
 
     echo "Searching $GSEARCH ..."
 
-    curl -H 'User-Agent: Googlebot' -s https://www.google.com/search?q=site%3A${GSEARCH} -o /tmp/fooo
+    curl -H 'User-Agent: Googlebot' -s ${URLBASE}search?q=site%3A${GSEARCH} -o /tmp/fooo
     check_search_results $GSEARCH
 
 done
@@ -169,7 +176,7 @@ echo " Sites with some contents indexed by Google:"
 echo "============================================"
 cat /tmp/resultz.txt | while read lin
 do
-	echo "https://www.google.com/search?q=site%3A${lin}"
+	echo "${URLBASE}search?q=site%3A${lin}"
 done
 
 rm -f /tmp/fooo /tmp/subsz
@@ -192,4 +199,3 @@ esac
 echo
 echo "Have a nice day :D"
 exit 0
-                                                                       
