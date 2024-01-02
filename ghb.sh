@@ -137,6 +137,12 @@ function dork_it() {
 	MYDORK="${URLBASE}search?q=site%3A${TARGET}%20intitle%3Alogin"
 	curl -H 'User-Agent: Googlebot' -s "$MYDORK" -o /tmp/fooo
         check_search_results "$MYDORK"
+	echo
+	echo "[*] Searching RDWeb Portal sites..."
+	MYDORK="${URLBASE}search?q=site%3A${TARGET}%20inurl%3A%2FRDWeb%2FPages%2Fen-US%2F%20filetype%3Aaspx%20~login"
+	curl -H 'User-Agent: Googlebot' -s "$MYDORK" -o /tmp/fooo
+        check_search_results "$MYDORK"
+	
 
 	echo
 	echo "Finished dorking!"
