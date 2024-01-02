@@ -109,6 +109,14 @@ function dork_it() {
 	MYDORK="https://www.google.com/search?q=site%3A${TARGET}%20intitle%3A%22GLPI%20-%20Authentication%22"
 	curl -H 'User-Agent: Googlebot' -s "$MYDORK" -o /tmp/fooo
         check_search_results "$MYDORK"
+	echo "[*] Searching BIG-IP(F5) sites..."
+	MYDORK="https://www.google.com/search?q=site%3A${TARGET}%20intitle%3A%22BIG-IP%22%20inurl%3A%22tmui%22"
+	curl -H 'User-Agent: Googlebot' -s "$MYDORK" -o /tmp/fooo
+        check_search_results "$MYDORK"
+	echo "[*] Searching BIG-IP(F5) - DORK2 - sites..."
+	MYDORK="https://www.google.com/search?q=site%3A${TARGET}%20inurl%3A%22tmui%2Flogin.jsp%22"
+	curl -H 'User-Agent: Googlebot' -s "$MYDORK" -o /tmp/fooo
+        check_search_results "$MYDORK"
 
 	echo
 	echo "Finished dorking!"
@@ -184,3 +192,4 @@ esac
 echo
 echo "Have a nice day :D"
 exit 0
+                                                                       
