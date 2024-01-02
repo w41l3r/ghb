@@ -5,7 +5,7 @@
 
 #URLBASE="https://www.google.com/"
 # or uncomment this if using Fireprox (fireprox-produced url after executing fire.py --command create --url https://www.google.com/ ... )
-URLBASE="https://xyzxyzxyz.execute-api.us-east-2.amazonaws.com/fireprox/"
+URLBASE="https://2xyz3xyz4xyz.execute-api.us-east-2.amazonaws.com/fireprox/"
 
 SUBSFILE=$1
 rm -f /tmp/fooo /tmp/resultz.txt /tmp/subsz
@@ -13,6 +13,9 @@ rm -f /tmp/fooo /tmp/resultz.txt /tmp/subsz
 function check_search_results() {
 
 	SEARCH=$1
+	GREEN='\033[0;32m'
+	NC='\033[0m' # Sem cor
+
 	if grep -i -e "Certifique-se de que todas as palavras estejam escritas corretamente" \
             -e "Make sure that all words are spelled correctly"\
 	    -e "did not match any documents" /tmp/fooo >/dev/null
@@ -20,7 +23,7 @@ function check_search_results() {
        		 echo " [!] nothing found."
 		 return 1
     	else
-       		 echo " [+] FOUND SOMETHING! "
+		 printf "${GREEN}[*] FOUND SOMETHING !!!${NC}\n"
         	 echo $SEARCH >> /tmp/resultz.txt
 		 return 0
 	fi
