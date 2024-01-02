@@ -5,7 +5,7 @@
 
 #URLBASE="https://www.google.com/"
 # or uncomment this if using Fireprox (fireprox-produced url after executing fire.py --command create --url https://www.google.com/ ... )
-URLBASE="https://2xyz3xyz4xyz.execute-api.us-east-2.amazonaws.com/fireprox/"
+URLBASE="https://5xyz5xyz5xyz.execute-api.us-east-2.amazonaws.com/fireprox/"
 
 SUBSFILE=$1
 rm -f /tmp/fooo /tmp/resultz.txt /tmp/subsz
@@ -78,6 +78,11 @@ function dork_it() {
 	curl -H 'User-Agent: Googlebot' -s "$MYDORK" -o /tmp/fooo
         check_search_results "$MYDORK"
 	echo
+	echo "[*] Searching phpinfo files..."
+	MYDORK="${URLBASE}search?q=site%3A${TARGET}%20%22PHP%20Version%22%20intitle%3Aphpinfo%20filetype%3Aphp"
+	curl -H 'User-Agent: Googlebot' -s "$MYDORK" -o /tmp/fooo
+        check_search_results "$MYDORK"
+	echo
 	echo "[*] Searching admin sites..."
 	MYDORK="${URLBASE}search?q=intitle%3Aadmin%20AND%20${TARGET}"
 	curl -H 'User-Agent: Googlebot' -s "$MYDORK" -o /tmp/fooo
@@ -125,6 +130,11 @@ function dork_it() {
 	echo
 	echo "[*] Searching BIG-IP(F5) - DORK2 - sites..."
 	MYDORK="${URLBASE}search?q=site%3A${TARGET}%20inurl%3A%22tmui%2Flogin.jsp%22"
+	curl -H 'User-Agent: Googlebot' -s "$MYDORK" -o /tmp/fooo
+        check_search_results "$MYDORK"
+	echo
+	echo "[*] Searching Login Portal sites..."
+	MYDORK="${URLBASE}search?q=site%3A${TARGET}%20intitle%3Alogin"
 	curl -H 'User-Agent: Googlebot' -s "$MYDORK" -o /tmp/fooo
         check_search_results "$MYDORK"
 
